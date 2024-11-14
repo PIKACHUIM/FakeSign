@@ -1,0 +1,7 @@
+TSServer/TimeStamping/bin/
+TSServer/TimeStamping/obj/
+TSServer/LibTimeStamp/bin/
+TSServer/LibTimeStamp/obj/
+SignTool/bin/
+SignTool/obj/
+SignTool/Release/

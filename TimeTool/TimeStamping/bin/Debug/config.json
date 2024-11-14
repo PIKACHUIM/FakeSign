@@ -1,0 +1,15 @@
+{
+  "listen_path": "/TSA/",
+  "listen_addr": "localhost",
+  "listen_port": "1003",
+  "server_urls": "http://test.timer.us.kg/",
+  "server_cert": "TSA.crt",
+  "server_keys": "TSA.key",
+  "server_fake": "true",
+  "windows_url": "",
+  "linuxos_url": "",
+  "signers_url": "",
+  "githubs_url": "https://github.com/PIKACHUIM/FakeSign",
+  "article_url": "https://code.52pika.cn/index.php/archives/277/",
+  "service_url": "https://test.certs.us.kg/"
+}
