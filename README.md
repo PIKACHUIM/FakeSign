@@ -42,6 +42,19 @@ Purchasing a code signing certificate is very expensive, and on the Windows plat
 
 6. Download the driver code signing tool: [Asia Integrity Signature Tool](https://github.com/PIKACHUIM/FakeSign/raw/refs/heads/main/Releases/TimestampClient.zip), open and select [**Custom Timestamp**] to sign
 
+
+> #### 开安全启动驱动签名步骤
+>
+> 1、修改inf文件为时间1（在过期证书有效期内，最好是颁发的时候）
+>
+> 2、亚洲诚信工具签名用过期EV交叉证书签名sys文件（时间1）
+>
+> 3、修改系统时间为时间2（时间2>=时间1）
+>
+> 4、inf2cat立即生成cat
+>
+> 5、亚洲诚信工具签名cat文件（时间3>=时间2）
+
 ### 部署时间证书 / Deploy Timestamp Server
 
 （一般情况不需要这个操作，你只需参考前一个“简易使用方法”内的教程即可）
