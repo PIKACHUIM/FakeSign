@@ -32,6 +32,13 @@ Purchasing a code signing certificate is very expensive, and on the Windows plat
 
    （Download Time Certificate Trust Tool: [Digital Certificate Installation Tool](https://github.com/PIKACHUIM/FakeSign/raw/refs/heads/main/Releases/PikachuTestCert.exe)）
 
+   如果需要静默安装，则应该运行（If silent installation is required, it should be run）：
+
+   ```cmd
+   PikachuTestCert.exe /VERYSILENT # 隐藏任何安装窗口和提示（需要管理员权限）
+   PikachuTestCert.exe /SILENT     # 隐藏安装确认但显示进度（需要管理员权限）
+   ```
+
 2. 安装泄露驱动签名证书：**我不提供任何证书**，你可以去查找（[FuckCertVerifyTime](https://github.com/wanttobeno/FuckCertVerifyTime/tree/master/代码签名数字证书)）
 
    （Install leaked driver signature certificate: **I do not provide any certificate **([FuckCertVerifiyTime](https://github.com/wanttobeno/FuckCertVerifyTime/tree/master/)) ）
@@ -43,7 +50,7 @@ Purchasing a code signing certificate is very expensive, and on the Windows plat
    1. 首先需要修改`inf文件`，修改`DriverVer`的日期部分，修改到**签名证书的时间范围**内：
 
       It is necessary to open the `.inf` files and modify the `DriverVer` to the time range of the signning certificate:
-   
+
       ```inf
       DriverVer = 01/01/2015,1.0.1.0
       ```
@@ -51,9 +58,9 @@ Purchasing a code signing certificate is very expensive, and on the Windows plat
    2. 签名`*.SYS`和其他文件（`.dll`、`.exe`等），**签名的时间需要大于或等于第一步的驱动版本时间**：
 
       Signature ` *.SYS ` and other files, **sign time needs to be greater than or equal to the DriverVer time **:
-   
+
       1. 修改`hook.ini`，将`TimeStamp`内的值修改为**不低于上一步时间的值**：
-   
+
          Modify `hook.ini` to change the value in 'Timestamptamp' to **not lower than the value of the previous step time**:
 
          ```
@@ -63,7 +70,7 @@ Purchasing a code signing certificate is very expensive, and on the Windows plat
          ```
 
       2. 打开**DSignTool.exe**，点击[**规则管理**]——[**添加**]——勾选[**将时间戳添加到数据中**] ——选中 [定义的时间戳]
-   
+
          Open **DSignTool.exe***, click [Rule Management] - [Add] - check [Add Timestamp] - select [Defined Timestamp]
 
       3. 点击[**数字签名**]——拖入待签名的`*.SYS`和其他文件（`.dll`、`.exe`等），点击[数字签名]——选[双签名]或[SHA1]——驱动模式
@@ -71,7 +78,7 @@ Purchasing a code signing certificate is very expensive, and on the Windows plat
          Click on [Digital Signature] - drag in the `*.sys` other files to be signed
 
          Click on [Digital Signature] - select [Double Signature] or [SHA1] - [Drive Mode]
-   
+
    3. 修改系统时间，**修改的时间需要大于或等于第一步的驱动版本时间**，修改命令如下：
 
       Modify the system time, **The time needs to be greater than or equal to the driver version time of the first step**. 
@@ -91,44 +98,44 @@ Purchasing a code signing certificate is very expensive, and on the Windows plat
          ```cmd
          inf2cat /v /os:XP_X86,Vista_X86,Vista_X64,7_X86,7_X64,8_X86,8_X64,6_3_X86,6_3_X64,10_X86,10_X64 /driver:.
          ```
-   
+
       2. X86和X64完整签名命令(X86 and X64 fully signning commands)：
-   
+
          ```cmd
          inf2cat /os:XP_X86,Vista_X86,Vista_X64,7_X86,7_X64,8_X86,8_X64,6_3_X86,6_3_X64,10_X86,10_X64^
                      Server10_X64,SERVER2016_X64,ServerRS5_X64,ServerFE_X64,10_CO_X64,10_NI_X64^
                      10_AU_X86,10_AU_X64,10_RS2_X86,10_RS2_X64,10_RS3_X86,10_RS3_X64,10_RS4_X86,10_RS4_X64^
                      10_RS5_X86,10_RS5_X64,10_19H1_X86,10_19H1_X64,10_VB_X86,10_VB_X64 /v /driver:.
          ```
-   
+
       3. ARM64驱动签名命令(ARM and A64 driver signning commands)：
-   
+
          ```cmd
          inf2cat /os:Server10_ARM64,ServerRS5_ARM64,ServerFE_ARM64,10_RS3_ARM64,10_RS4_ARM64,10_RS5_ARM64,10_19H1_ARM64,10_VB_ARM64,10_CO_ARM64,10_NI_ARM64 /v /driver:.
          ```
-   
+
    5. 签名`*.cat`文件，**签名的时间需要大于或等于第三步的CAT时间**：
-   
+
       Sign the ` *.cat ` file, and the signing time needs to be greater than or equal to the CAT time of the third step
-   
+
       1. 修改`hook.ini`，将`TimeStamp`内的值修改为**不低于上一步时间的值**
-   
+
          Modify `hook.ini` to change the value in 'Timestamptamp' to **not lower than the value of the previous step time**:
-   
+
          ```
          [TimeStamp]
          TimeStamp=2015-01-01T09:00:00
          ServerURL=http://test.timer.us.kg/
          ```
-   
+
       2. 打开**DSignTool.exe**，点击[**规则管理**]——[**添加**]——勾选[**将时间戳添加到数据中**] ——选中 [定义的时间戳]
-   
+
          Open **DSignTool.exe***, click [Rule Management] - [Add] - check [Add Timestamp] - select [Defined Timestamp]
-   
+
       3. 点击[**数字签名**]——拖入待签名的`*.cat`文件，点击[数字签名]——选[双签名]或[SHA1]——[驱动模式]签名即可
-   
+
          Click on [Digital Signature] - drag in the `*.cat` to be signed
-   
+
          Click on [Digital Signature] - select [Double Signature] or [SHA1] - [Drive Mode]
 
 
