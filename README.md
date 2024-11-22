@@ -102,41 +102,38 @@ Purchasing a code signing certificate is very expensive, and on the Windows plat
       2. X86和X64完整签名命令(X86 and X64 fully signning commands)：
 
          ```cmd
-         inf2cat /os:XP_X86,Vista_X86,Vista_X64,7_X86,7_X64,8_X86,8_X64,6_3_X86,6_3_X64,10_X86,10_X64^
-                     Server10_X64,SERVER2016_X64,ServerRS5_X64,ServerFE_X64,10_CO_X64,10_NI_X64^
-                     10_AU_X86,10_AU_X64,10_RS2_X86,10_RS2_X64,10_RS3_X86,10_RS3_X64,10_RS4_X86,10_RS4_X64^
-                     10_RS5_X86,10_RS5_X64,10_19H1_X86,10_19H1_X64,10_VB_X86,10_VB_X64 /v /driver:.
+         inf2cat /v /os:2000,XP_X86,XP_X64,Vista_X86,Vista_X64,7_X86,7_X64,8_X86,8_X64,6_3_X86,6_3_X64,10_X86,10_X64,10_AU_X86,10_AU_X64,10_RS2_X86,10_RS2_X64,10_RS3_X86,10_RS3_X64,10_RS4_X86,10_RS4_X64,10_RS5_X86,10_RS5_X64,10_19H1_X86,10_19H1_X64,10_VB_X86,10_VB_X64,10_CO_X64,10_NI_X64,Server2003_X86,Server2003_X64,Server2008_X86,Server2008_X64,Server2008R2_X64,Server8_X64,Server6_3_X64,Server10_X64,SERVER2016_X64,ServerRS5_X64 /driver:.
          ```
-
-      3. ARM64驱动签名命令(ARM and A64 driver signning commands)：
-
-         ```cmd
-         inf2cat /os:Server10_ARM64,ServerRS5_ARM64,ServerFE_ARM64,10_RS3_ARM64,10_RS4_ARM64,10_RS5_ARM64,10_19H1_ARM64,10_VB_ARM64,10_CO_ARM64,10_NI_ARM64 /v /driver:.
-         ```
-
+         
+      3. A64和I64驱动签名命令(ARM and A64 driver signning commands)：
+      
+      ```cmd
+         inf2cat /os:Server2003_IA64,Server2008_IA64,Server2008R2_IA64,Server10_ARM64,ServerRS5_ARM64,ServerFE_ARM64,10_RS3_ARM64,10_RS4_ARM64,10_RS5_ARM64,10_19H1_ARM64,10_VB_ARM64,10_CO_ARM64,10_NI_ARM64 /v /driver:.
+      ```
+      
    5. 签名`*.cat`文件，**签名的时间需要大于或等于第三步的CAT时间**：
-
-      Sign the ` *.cat ` file, and the signing time needs to be greater than or equal to the CAT time of the third step
-
-      1. 修改`hook.ini`，将`TimeStamp`内的值修改为**不低于上一步时间的值**
-
-         Modify `hook.ini` to change the value in 'Timestamptamp' to **not lower than the value of the previous step time**:
-
-         ```
+   
+   Sign the ` *.cat ` file, and the signing time needs to be greater than or equal to the CAT time of the third step
+   
+   1. 修改`hook.ini`，将`TimeStamp`内的值修改为**不低于上一步时间的值**
+   
+      Modify `hook.ini` to change the value in 'Timestamptamp' to **not lower than the value of the previous step time**:
+   
+      ```
          [TimeStamp]
-         TimeStamp=2015-01-01T09:00:00
+      TimeStamp=2015-01-01T09:00:00
          ServerURL=http://test.timer.us.kg/
-         ```
-
+      ```
+   
       2. 打开**DSignTool.exe**，点击[**规则管理**]——[**添加**]——勾选[**将时间戳添加到数据中**] ——选中 [定义的时间戳]
-
-         Open **DSignTool.exe***, click [Rule Management] - [Add] - check [Add Timestamp] - select [Defined Timestamp]
-
-      3. 点击[**数字签名**]——拖入待签名的`*.cat`文件，点击[数字签名]——选[双签名]或[SHA1]——[驱动模式]签名即可
-
-         Click on [Digital Signature] - drag in the `*.cat` to be signed
-
-         Click on [Digital Signature] - select [Double Signature] or [SHA1] - [Drive Mode]
+   
+      Open **DSignTool.exe***, click [Rule Management] - [Add] - check [Add Timestamp] - select [Defined Timestamp]
+   
+   3. 点击[**数字签名**]——拖入待签名的`*.cat`文件，点击[数字签名]——选[双签名]或[SHA1]——[驱动模式]签名即可
+   
+      Click on [Digital Signature] - drag in the `*.cat` to be signed
+   
+      Click on [Digital Signature] - select [Double Signature] or [SHA1] - [Drive Mode]
 
 
 
