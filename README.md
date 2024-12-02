@@ -112,28 +112,41 @@ Purchasing a code signing certificate is very expensive, and on the Windows plat
       ```
       
    5. 签名`*.cat`文件，**签名的时间需要大于或等于第三步的CAT时间**：
-   
+
    Sign the ` *.cat ` file, and the signing time needs to be greater than or equal to the CAT time of the third step
-   
+
    1. 修改`hook.ini`，将`TimeStamp`内的值修改为**不低于上一步时间的值**
-   
+
       Modify `hook.ini` to change the value in 'Timestamptamp' to **not lower than the value of the previous step time**:
-   
+
       ```
          [TimeStamp]
       TimeStamp=2015-01-01T09:00:00
          ServerURL=http://test.timer.us.kg/
       ```
-   
+
       2. 打开**DSignTool.exe**，点击[**规则管理**]——[**添加**]——勾选[**将时间戳添加到数据中**] ——选中 [定义的时间戳]
-   
+
       Open **DSignTool.exe***, click [Rule Management] - [Add] - check [Add Timestamp] - select [Defined Timestamp]
-   
+
    3. 点击[**数字签名**]——拖入待签名的`*.cat`文件，点击[数字签名]——选[双签名]或[SHA1]——[驱动模式]签名即可
-   
+
       Click on [Digital Signature] - drag in the `*.cat` to be signed
-   
+
       Click on [Digital Signature] - select [Double Signature] or [SHA1] - [Drive Mode]
+
+4. 备注信息 / Notice：
+
+   1. 上述教程无需自建TSA服务，如有需要自己搭建的，可以直接前往[皮卡丘公共服务测试根证书](https://test.certs.us.kg/)申请您的时间戳证书
+
+   2. 签名时间顺序：驱动版本时间<=sys/dll签名时间<=CAT创建时间<=CAT签名时间
+
+   3. The above tutorial does not require building your own TSA service. 
+
+      If you need to build it yourself, go to [Pikachu Public Test CA](https://test.certs.us.kg/) Apply for your timestamp certificate
+
+   4. Signing time sequence: Driver version time<=sys/dll Signature time<=CAT creation time<=CAT signature time
+
 
 
 
@@ -285,17 +298,27 @@ signtool.exe sign /f Cert.pfx /p password /fd sha256 /tr "http://test.timer.us.k
 
   - #### 自建伪造时间戳服务器
 
-    - ##### 自建CA证书（CA=TRUE，密钥用法=Certificate Signing, Off-line CRL Signing, CRL Signing，增强型密钥用法=2.5.29.32.0）
+    **您可以直接前往[皮卡丘公共服务测试根证书](https://test.certs.us.kg/)一键申请您自己的时间戳证书，无需再自建，自建教程：**
 
-    - ##### 自签时间戳签名证书（密钥用途=Digital Signature，增强型密钥用法=时间戳 ，OCSP-URL，CRL-URL）
-
-    - ##### 设置CRL地址（推荐Nginx，把CRL文件放入对应地址），或者设置OCSP服务器（OpenSSL OCSP）
-
-    - ##### 搭建并启动时间戳响应服务器（*RFC*3161以及Authenticode格式 ，需要同时支持SHA1+SHA256）
+    > - 自建CA证书（CA=TRUE，密钥用法=Certificate Signing, Off-line CRL Signing, CRL Signing，增强型密钥用法=2.5.29.32.0）
+    >
+    > - 自签时间戳签名证书（密钥用途=Digital Signature，增强型密钥用法=时间戳 ，OCSP-URL，CRL-URL）
+    >
+    > - 设置CRL地址（推荐Nginx，把CRL文件放入对应地址），或者设置OCSP服务器（OpenSSL OCSP）
+    >
+    > - 搭建并启动时间戳响应服务器（*RFC*3161以及Authenticode格式 ，需要同时支持SHA1+SHA256）
+    
+    
 
 
 
 ## 自建时间服务 / TSA Server
+
+上述教程无需自建TSA服务，如有需要自己搭建的，可以直接前往[皮卡丘公共服务测试根证书](https://test.certs.us.kg/)申请您的时间戳证书
+
+The above tutorial does not require building your own TSA service. 
+
+If you need to build it yourself, go to [Pikachu Public Test CA](https://test.certs.us.kg/) Apply for your timestamp certificate
 
 ### 直接修改配置文件（推荐）
 
@@ -393,6 +416,12 @@ sudo apt-get install wine mono-complete winetricks wine32 winbind
   ```
 
 ## 构建签名工具 / Build Sign Tool
+
+正常情况不需要自行搭建服务器，如果有需要使用自己的服务器，请继续阅读
+
+Under normal circumstances, it is not necessary to set up a server on your own. 
+
+If you need to use your own server, please continue reading.
 
 ### 直接修改hook.ini文件（推荐）
 
