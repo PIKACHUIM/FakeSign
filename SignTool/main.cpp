@@ -227,7 +227,6 @@ BOOL WINAPI DllMain(
 		wcscat(output, (WCHAR*)L"\n自定义服务器为: ");
 		wcscat(output, (WCHAR*)lpServerURL);
 		MessageBoxW(NULL, (LPCUWSTR)output, L"设置信息", MB_OK);
-		//MessageBoxW(NULL, lpTimestamp, L"自定义时间戳为", MB_OK);
 	}
 	return 1;
 }

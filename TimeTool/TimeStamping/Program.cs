@@ -19,6 +19,7 @@ namespace FakeStamping
         static string server_urls = @"http://time.pika.net.cn/fake/RSA/";
         static string server_cert = @"TSA.crt";
         static string server_keys = @"TSA.key";
+        static string server_type = @"RSA";
         static string server_fake = @"true";
         static string windows_url = @"https://github.com/PIKACHUIM/CA/raw/main/fake/FakeCACert.zip";
         static string linuxos_url = @"https://github.com/PIKACHUIM/CA/raw/main/fake/CA-ALLCERT.zip";
@@ -52,7 +53,8 @@ namespace FakeStamping
             try
             {
                 tsResponder = new TSResponder(File.ReadAllBytes((string)server_cert),
-                                              File.ReadAllBytes((string)server_keys), "SHA1");
+                                              File.ReadAllBytes((string)server_keys),
+                                              "SHA1", server_type);
             }
             catch
             {
@@ -123,6 +125,7 @@ namespace FakeStamping
             Program.server_cert = Program.Readjson("server_cert");
             Program.server_keys = Program.Readjson("server_keys");
             Program.server_fake = Program.Readjson("server_fake");
+            Program.server_type = Program.Readjson("server_type");
             Program.windows_url = Program.Readjson("windows_url");
             Program.linuxos_url = Program.Readjson("linuxos_url");
             Program.signers_url = Program.Readjson("signers_url");
@@ -242,7 +245,7 @@ namespace FakeStamping
                 catch (Exception e)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine(DateTime.Now.ToString("yyyy-M-d HH:mm:ss") + " ERROR " + e.Message);
+                    Console.WriteLine("   [Error!!] " + DateTime.Now.ToString("yyyy-M-d HH:mm:ss") + ": " + e.Message);
                     Console.ForegroundColor = ConsoleColor.White;
                     ctx.Response.Close();
                 }

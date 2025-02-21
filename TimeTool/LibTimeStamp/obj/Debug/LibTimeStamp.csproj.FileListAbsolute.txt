@@ -16,3 +16,12 @@ G:\Codes\DriverSigner\TSServer\Develop\LibTimeStamp\obj\Debug\LibTimeStamp.cspro
 G:\Codes\DriverSigner\TSServer\Develop\LibTimeStamp\obj\Debug\LibTimeStamp.csproj.CopyComplete
 G:\Codes\DriverSigner\TSServer\Develop\LibTimeStamp\obj\Debug\LibTimeStamp.dll
 G:\Codes\DriverSigner\TSServer\Develop\LibTimeStamp\obj\Debug\LibTimeStamp.pdb
+G:\Codes\DriverSigner\TimeTool\LibTimeStamp\obj\Debug\LibTimeStamp.csproj.AssemblyReference.cache
+G:\Codes\DriverSigner\TimeTool\LibTimeStamp\obj\Debug\LibTimeStamp.csproj.CoreCompileInputs.cache
+G:\Codes\DriverSigner\TimeTool\LibTimeStamp\obj\Debug\LibTimeStamp.dll
+G:\Codes\DriverSigner\TimeTool\LibTimeStamp\obj\Debug\LibTimeStamp.pdb
+G:\Codes\DriverSigner\TimeTool\LibTimeStamp\bin\Debug\LibTimeStamp.dll
+G:\Codes\DriverSigner\TimeTool\LibTimeStamp\bin\Debug\LibTimeStamp.pdb
+G:\Codes\DriverSigner\TimeTool\LibTimeStamp\bin\Debug\BouncyCastle.Crypto.dll
+G:\Codes\DriverSigner\TimeTool\LibTimeStamp\obj\Debug\LibTimeStamp.csproj.CopyComplete
+G:\Codes\DriverSigner\TimeTool\LibTimeStamp\bin\Debug\BouncyCastle.Crypto.xml

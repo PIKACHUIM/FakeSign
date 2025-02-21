@@ -20,9 +20,9 @@ G:\Codes\DriverSigner\TimeTool\TimeStamping\bin\Debug\Newtonsoft.Json.dll
 G:\Codes\DriverSigner\TimeTool\TimeStamping\bin\Debug\BouncyCastle.Crypto.dll
 G:\Codes\DriverSigner\TimeTool\TimeStamping\bin\Debug\LibTimeStamp.pdb
 G:\Codes\DriverSigner\TimeTool\TimeStamping\bin\Debug\Newtonsoft.Json.xml
-G:\Codes\DriverSigner\TimeTool\TimeStamping\bin\Debug\BouncyCastle.Crypto.xml
 G:\Codes\DriverSigner\TimeTool\TimeStamping\obj\Debug\TimeStamping.csproj.AssemblyReference.cache
 G:\Codes\DriverSigner\TimeTool\TimeStamping\obj\Debug\TimeStamping.csproj.CoreCompileInputs.cache
 G:\Codes\DriverSigner\TimeTool\TimeStamping\obj\Debug\TimeStamping.csproj.CopyComplete
 G:\Codes\DriverSigner\TimeTool\TimeStamping\obj\Debug\TimeStamping.exe
 G:\Codes\DriverSigner\TimeTool\TimeStamping\obj\Debug\TimeStamping.pdb
+G:\Codes\DriverSigner\TimeTool\TimeStamping\bin\Debug\BouncyCastle.Crypto.xml

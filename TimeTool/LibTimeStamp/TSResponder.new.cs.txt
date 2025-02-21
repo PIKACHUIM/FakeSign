@@ -1,44 +1,53 @@
 ﻿using Org.BouncyCastle.Asn1;
 using Org.BouncyCastle.Asn1.Cms;
+using Org.BouncyCastle.Asn1.X509;
 using Org.BouncyCastle.Cms;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Operators;
+using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Math;
 using Org.BouncyCastle.OpenSsl;
+using Org.BouncyCastle.Pkcs;
+using Org.BouncyCastle.Security;
 using Org.BouncyCastle.Tsp;
-using Org.BouncyCastle.Asn1.X509;
-using Org.BouncyCastle.X509.Store;
 using Org.BouncyCastle.X509;
+using Org.BouncyCastle.X509.Store;
 using Org.BouncyCastle.Utilities.Collections;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Attribute = Org.BouncyCastle.Asn1.Cms.Attribute;
 
 namespace LibTimeStamp
 {
-    public class TSResponder
-    {        
-        X509Certificate x509Cert;
-        AsymmetricKeyParameter priKey;
-        IX509Store x509Store;
-        //IStore<X509Certificate> x509Store;
-        string hashAlg;
-        string keyType;
-        public TSResponder(byte[] x509Cert, byte[] priKey, string hashAlg, string keyType)
+    public class TSResponderNew
+    {
+        private X509Certificate x509Cert;
+        private AsymmetricKeyParameter priKey;
+        private string hashAlg;
+        private string keyType;
+
+        public TSResponderNew(byte[] x509CertBytes, byte[] priKeyBytes, string hashAlg, string keyType)
         {
-            this.x509Cert = new X509CertificateParser().ReadCertificate(x509Cert);
-            this.priKey = ((AsymmetricCipherKeyPair)(new PemReader(new StreamReader(new MemoryStream(priKey))).ReadObject())).Private;
-            this.x509Store = X509StoreFactory.Create("Certificate/Collection",new X509CollectionStoreParameters(new X509CertificateParser().ReadCertificates(x509Cert)));
+            this.x509Cert = new X509CertificateParser().ReadCertificate(x509CertBytes);
+            this.priKey = ((AsymmetricCipherKeyPair)(new PemReader(new StreamReader(new MemoryStream(priKeyBytes))).ReadObject())).Private;
             this.hashAlg = hashAlg;
             this.keyType = keyType;
         }
+
         public byte[] GenResponse(byte[] bRequest, DateTime signTime, out bool isRFC, byte[] bSerial = null)
         {
             TimeStampRequest timeStampRequest = null;
-            try { timeStampRequest = new TimeStampRequest(bRequest); int v = timeStampRequest.Version; } catch { timeStampRequest = null; }
-            ;
+            try
+            {
+                timeStampRequest = new TimeStampRequest(bRequest);
+            }
+            catch
+            {
+                timeStampRequest = null;
+            }
+
             if (timeStampRequest == null)
             {
                 isRFC = false;
@@ -56,23 +65,25 @@ namespace LibTimeStamp
                 return RFC3161(bRequest, signTime, biSerial);
             }
         }
-        private byte[] RFC3161(byte[] bRequest,DateTime signTime,BigInteger biSerial)
+
+        private byte[] RFC3161(byte[] bRequest, DateTime signTime, BigInteger biSerial)
         {
             TimeStampRequest timeStampRequest = new TimeStampRequest(bRequest);
 
             Asn1EncodableVector signedAttributes = new Asn1EncodableVector();
             signedAttributes.Add(new Attribute(CmsAttributes.ContentType, new DerSet(new DerObjectIdentifier("1.2.840.113549.1.7.1"))));
             signedAttributes.Add(new Attribute(CmsAttributes.SigningTime, new DerSet(new DerUtcTime(signTime))));
-            Org.BouncyCastle.Asn1.Cms.AttributeTable signedAttributesTable = new Org.BouncyCastle.Asn1.Cms.AttributeTable(signedAttributes);
-            signedAttributesTable.ToAsn1EncodableVector();
+            AttributeTable signedAttributesTable = new AttributeTable(signedAttributes);
 
-            TimeStampTokenGenerator timeStampTokenGenerator = new TimeStampTokenGenerator(priKey, x509Cert, new DefaultDigestAlgorithmIdentifierFinder().find(hashAlg).Algorithm.Id, "1.3.6.1.4.1.13762.3", signedAttributesTable, null);
-            timeStampTokenGenerator.SetCertificates(x509Store);
+            // 直接指定算法 OID
+            string digestOid = "2.16.840.1.101.3.4.2.1"; // 示例：SHA-256 的 OID
+            TimeStampTokenGenerator timeStampTokenGenerator = new TimeStampTokenGenerator(priKey, x509Cert, digestOid, "1.3.6.1.4.1.13762.3", signedAttributesTable, null);
+            timeStampTokenGenerator.SetCertificates(new X509Certificate[] { x509Cert });
             TimeStampResponseGenerator timeStampResponseGenerator = new TimeStampResponseGenerator(timeStampTokenGenerator, TspAlgorithms.Allowed);
             TimeStampResponse timeStampResponse = timeStampResponseGenerator.Generate(timeStampRequest, biSerial, signTime);
-            byte[] result = timeStampResponse.GetEncoded();
-            return result;
+            return timeStampResponse.GetEncoded();
         }
+
         private byte[] Authenticode(byte[] bRequest, DateTime signTime)
         {
             string requestString = "";
@@ -94,12 +105,11 @@ namespace LibTimeStamp
             Asn1EncodableVector signedAttributes = new Asn1EncodableVector();
             signedAttributes.Add(new Attribute(CmsAttributes.ContentType, new DerSet(new DerObjectIdentifier("1.2.840.113549.1.7.1"))));
             signedAttributes.Add(new Attribute(CmsAttributes.SigningTime, new DerSet(new DerUtcTime(signTime))));
-            //AttributeTable signedAttributesTable = new AttributeTable(signedAttributes);
-            Org.BouncyCastle.Asn1.Cms.AttributeTable signedAttributesTable = new Org.BouncyCastle.Asn1.Cms.AttributeTable(signedAttributes);
-            signedAttributesTable.ToAsn1EncodableVector();
-            DefaultSignedAttributeTableGenerator signedAttributeGenerator = new DefaultSignedAttributeTableGenerator(signedAttributesTable);
+            AttributeTable signedAttributesTable = new AttributeTable(signedAttributes);
+
             SignerInfoGeneratorBuilder signerInfoBuilder = new SignerInfoGeneratorBuilder();
-            signerInfoBuilder.WithSignedAttributeGenerator(signedAttributeGenerator);
+            signerInfoBuilder.WithSignedAttributeGenerator(new DefaultSignedAttributeTableGenerator(signedAttributesTable));
+
             ISignatureFactory signatureFactory;
             if (this.keyType == "SM2")
             {
@@ -109,12 +119,13 @@ namespace LibTimeStamp
             {
                 signatureFactory = new Asn1SignatureFactory(hashAlg + "WithRSA", priKey);
             }
+
             CmsSignedDataGenerator generator = new CmsSignedDataGenerator();
             generator.AddSignerInfoGenerator(signerInfoBuilder.Build(signatureFactory, x509Cert));
-            generator.AddCertificates(x509Store);
+            generator.AddCertificates(new X509Certificate[] { x509Cert });
             CmsSignedData cmsSignedData = generator.Generate(new CmsProcessableByteArray(octets), true);
-            byte[] result = cmsSignedData.ContentInfo.GetEncoded("DER");
-            return Encoding.ASCII.GetBytes(Convert.ToBase64String(result).ToArray());
+            byte[] result = cmsSignedData.ContentInfo.GetEncoded();
+            return Encoding.ASCII.GetBytes(Convert.ToBase64String(result));
         }
     }
 }
