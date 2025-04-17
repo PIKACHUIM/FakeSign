@@ -1,7 +1,7 @@
 FROM ubuntu
 
 WORKDIR /app
-COPY /app/* /app/*
+COPY /app/ /app/
 RUN apt update && apt -y install mono-complete
 EXPOSE 80
 CMD ["mono", "/app/TimeStamping.exe"]
