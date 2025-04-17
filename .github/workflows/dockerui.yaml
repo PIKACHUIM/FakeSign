@@ -39,5 +39,5 @@ jobs:
         with:
           context: ./DockerUI
           push: true
-          tags: ${{ steps.meta.outputs.tags }}, latest
+          tags: latest
           labels: ${{ steps.meta.outputs.labels }}
