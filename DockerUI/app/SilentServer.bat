@@ -1,0 +1,1 @@
+nircmd.exe elevatecmd exec hide TimeStamping.exe

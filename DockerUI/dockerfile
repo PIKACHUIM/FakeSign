@@ -1,0 +1,7 @@
+FROM ubuntu
+
+WORKDIR /app
+COPY . .
+RUN  apt apt install mono-complete
+EXPOSE 80
+CMD ["mono TimeStamping.exe"]
