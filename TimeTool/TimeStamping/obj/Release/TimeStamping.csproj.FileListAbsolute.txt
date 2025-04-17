@@ -1,0 +1,14 @@
+G:\Codes\DriverSigner\TimeTool\TimeStamping\bin\Release\TimeStamping.exe.config
+G:\Codes\DriverSigner\TimeTool\TimeStamping\bin\Release\TimeStamping.exe
+G:\Codes\DriverSigner\TimeTool\TimeStamping\bin\Release\TimeStamping.pdb
+G:\Codes\DriverSigner\TimeTool\TimeStamping\bin\Release\LibTimeStamp.dll
+G:\Codes\DriverSigner\TimeTool\TimeStamping\bin\Release\Newtonsoft.Json.dll
+G:\Codes\DriverSigner\TimeTool\TimeStamping\bin\Release\BouncyCastle.Crypto.dll
+G:\Codes\DriverSigner\TimeTool\TimeStamping\bin\Release\LibTimeStamp.pdb
+G:\Codes\DriverSigner\TimeTool\TimeStamping\bin\Release\Newtonsoft.Json.xml
+G:\Codes\DriverSigner\TimeTool\TimeStamping\bin\Release\BouncyCastle.Crypto.xml
+G:\Codes\DriverSigner\TimeTool\TimeStamping\obj\Release\TimeStamping.csproj.AssemblyReference.cache
+G:\Codes\DriverSigner\TimeTool\TimeStamping\obj\Release\TimeStamping.csproj.CoreCompileInputs.cache
+G:\Codes\DriverSigner\TimeTool\TimeStamping\obj\Release\TimeStamping.csproj.CopyComplete
+G:\Codes\DriverSigner\TimeTool\TimeStamping\obj\Release\TimeStamping.exe
+G:\Codes\DriverSigner\TimeTool\TimeStamping\obj\Release\TimeStamping.pdb

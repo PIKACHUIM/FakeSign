@@ -69,7 +69,7 @@ namespace FakeStamping
             try
             {
                 listener.AuthenticationSchemes = AuthenticationSchemes.Anonymous;
-                listener.Prefixes.Add(@"http://" + listen_addr + ":" + listen_port + listen_path);
+                listener.Prefixes.Add(@"http://*:" + listen_port + listen_path);
                 listener.Start();
             }
             catch
