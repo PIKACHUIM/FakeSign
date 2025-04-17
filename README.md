@@ -12,6 +12,7 @@
 
 - http://timers.dns.navy/
 - http://timers.524228.xyz/
+- [http://a.timers.524228.xyz/](http://a.timers.524228.xyz/)
 
 ## 项目介绍 / Introduction
 
@@ -75,7 +76,7 @@ Purchasing a code signing certificate is very expensive, and on the Windows plat
          ```
          [TimeStamp]
          TimeStamp=2015-01-01T08:00:00
-         ServerURL=http://test.timer.us.kg/
+         ServerURL=http://timers.524228.xyz/
          ```
 
       2. 打开**DSignTool.exe**，点击[**规则管理**]——[**添加**]——勾选[**将时间戳添加到数据中**] ——选中 [定义的时间戳]
@@ -131,7 +132,7 @@ Purchasing a code signing certificate is very expensive, and on the Windows plat
       ```
          [TimeStamp]
       TimeStamp=2015-01-01T09:00:00
-         ServerURL=http://test.timer.us.kg/
+      ServerURL=http://timers.524228.xyz/
       ```
 
       2. 打开**DSignTool.exe**，点击[**规则管理**]——[**添加**]——勾选[**将时间戳添加到数据中**] ——选中 [定义的时间戳]
@@ -250,7 +251,7 @@ inf2cat /v /os:XP_X86,Vista_X86,Vista_X64,7_X86,7_X64,8_X86,8_X64,6_3_X86,6_3_X6
 ##### 单独添加时间戳（序号=1）
 
 ```shell
-signtool timestamp /tp 1 /tr "http://test.timer.us.kg/2011-01-01T00:00:00" test.exe
+signtool timestamp /tp 1 /tr "http://timers.524228.xyz/2011-01-01T00:00:00" test.exe
 ```
 
 ##### 代码签名时间戳（SHA160）
