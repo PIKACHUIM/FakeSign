@@ -1,6 +1,6 @@
 {
   "listen_path": "/",
-  "listen_addr": "localhost",
+  "listen_addr": "0.0.0.0",
   "listen_port": "80",
   "server_urls": "http://localhost:80/",
   "server_cert": "TSA.crt",
